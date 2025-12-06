@@ -2,8 +2,7 @@
 from django.urls import path
 
 from . import views
-from .views import Hotel
+from .views import RoomsListView
 urlpatterns = [
-    #path("", views.index, name="index"),
-    path("", Hotel.as_view(), name="hotel"),
+    path("", RoomsListView.as_view(), name = "rooms"),
 ]
