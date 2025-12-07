@@ -6,7 +6,7 @@ from .models import Rooms, Booking
 import json
 import datetime
 
-
+from django.shortcuts import render
 @method_decorator(csrf_exempt, name="dispatch")
 class RoomsListView(View):  # Список номеров
 
@@ -111,12 +111,15 @@ class BookingListView(View):#Список и создание брони
         if date_start >= date_end:
             return JsonResponse({'error':'date_start должен быть раньше чем date_end'}, status=400)
 
+        overlapp = Booking.objects.filter(room=room,date_start=date_start,date_end=date_end).exists()
+        if overlapp:
+            return JsonResponse({'error':'Номер уже забронирован на эти даты'}, status = 400)
         booking = Booking.objects.create(room=room, date_start=date_start, date_end=date_end)
-
+        
         return JsonResponse({'booking_id': booking.id}, status=201)
 
-@method_decorator(csrf_exempt, name="dispatch")#Удаление брони
-class BookingDetailView(View):
+@method_decorator(csrf_exempt, name="dispatch")
+class BookingDetailView(View):#Удаление брони
     def delete(self,request,booking_id):
         try:
             booking = Booking.objects.get(id=booking_id)
@@ -124,3 +127,12 @@ class BookingDetailView(View):
             return JsonResponse({'error':'Бронь не найдена'}, status=404)
         booking.delete()
         return JsonResponse({"success": True}, status=200)
+
+
+
+def index(request):
+    return render(request, "index.html")
+
+def rooms(request):
+    rooms_qs = Rooms.objects.all()
+    return render(request, "list_hotel.html", {"rooms": rooms_qs})
