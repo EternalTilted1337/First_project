@@ -14,15 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from hotel.views import index, rooms
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("rooms/",  include("hotel.urls")),
+    path("admin/", admin.site.urls),
+    path("rooms/", include("hotel.urls")),
     path("", index, name="index"),
-    path('list/', rooms, name ='list')#Мемный метод,  хотел в rooms сделать таблицу но не судьба
+    path("list/", rooms, name="list"),  # Мемный метод,  хотел в rooms сделать таблицу но не судьба
 ]
 
-#Прописать html
+# Прописать html
 #
