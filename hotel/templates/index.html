@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление номерами</title>
+</head>
+<body>
+<h1>Добавить номер</h1>
+<form id="room-form">
+    <input type="text" id="description" placeholder="Описание"><br>
+    <input type="number" id="price" placeholder="Цена за ночь"><br>
+    <button type="button" onclick="createRoom()">Создать номер</button>
+</form>
+
+<script>
+    async function createRoom() {
+        const body = {
+            description: document.getElementById('description').value,
+            price: Number(document.getElementById('price').value),
+        };
+
+        const resp = await fetch('/rooms/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
+        });
+        const data = await resp.json();
+        alert(JSON.stringify(data));
+    }
+</script>
+</body>
+</html>

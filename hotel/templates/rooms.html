@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список номеров</title>
+</head>
+<body>
+<h1>Список номеров</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Описание</th>
+        <th>Цена</th>
+    </tr>
+    {% for room in rooms %}
+    <tr>
+        <td>{{ room.id }}</td>
+        <td>{{ room.description }}</td>
+        <td>{{ room.price }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Номеров нет</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
