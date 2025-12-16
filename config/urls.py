@@ -21,10 +21,9 @@ from hotel.views import index, rooms
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("rooms/", include("hotel.urls")),
+    path('api/rooms/', include('hotel.rooms_urls')),
+    path('api/bookings/', include('hotel.bookings_urls')),
     path("", index, name="index"),
-    path("list/", rooms, name="list"),  # Мемный метод,  хотел в rooms сделать таблицу но не судьба
+    path("list/", rooms, name="list"),
 ]
 
-# Прописать html
-#

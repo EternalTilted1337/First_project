@@ -1,29 +1,27 @@
-POETRY = poetry
 
-.PHONY: run install migrate makemigrations
+
+.PHONY: run install migrate makemigrations lint lint-fix format
+
 
 install:
-	$(POETRY) install
+	poetry install
 
 run:
-	$(POETRY) run python manage.py runserver
+	python manage.py makemigrations --no-input --merge
+	python manage.py migrate --no-input
+	python manage.py runserver 0.0.0.0:8000
 
-#Миграции
 migrate:
-	$(POETRY) run python manage.py migrate
+	python manage.py migrate
 
 makemigrations:
-	$(POETRY) run python manage.py makemigrations
+	python manage.py makemigrations
 
-#Ruff линтинг
 lint:
-	$(POETRY) run ruff check
+	ruff check
+
 lint-fix:
-	$(POETRY) run ruff check . --fix
+	ruff check . --fix
 
-#Форматирование через Ruff
 format:
-	$(POETRY) run ruff format .
-
-
-
+	ruff format .
